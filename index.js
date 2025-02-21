@@ -27,6 +27,7 @@ async function run() {
 
     const database = client.db("taskBoardDB");
     const usersCollection = database.collection("users");
+    const tasksCollection = database.collection("tasks");
 
     // users
     app.get('/users',async(req,res)=>{
@@ -43,6 +44,13 @@ async function run() {
       }
       const result = await usersCollection.insertOne(user);
       res.send(result);
+    })
+
+    // tasks
+    app.post('/tasks',async(req,res)=>{
+      const note = req.body;
+      const result = await tasksCollection.insertOne(note)
+      res.send(result)
     })
 
     // Send a ping to confirm a successful connection
