@@ -47,6 +47,11 @@ async function run() {
     })
 
     // tasks
+    // app.get('/tasks',async(req,res)=>{
+    //   const result = await tasksCollection.find().toArray()
+    //   res.send(result);
+    // })
+
     app.get('/tasks/:id',async(req,res)=>{
       const id = req.params.id;
       const query = {_id: new ObjectId(id)};
@@ -66,6 +71,31 @@ async function run() {
       const result = await tasksCollection.insertOne(note)
       res.send(result)
     })
+
+    app.patch('/tasks/inProgress/:id',async(req,res)=>{
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)};
+      const updatedDoc = {
+        $set: {
+          category:'In Progress'
+        }
+      }
+      const result = await tasksCollection.updateOne(filter,updatedDoc)
+      res.send(result);
+    })
+
+    app.patch('/tasks/done/:id',async(req,res)=>{
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)};
+      const updatedDoc = {
+        $set: {
+          category:'Done'
+        }
+      }
+      const result = await tasksCollection.updateOne(filter,updatedDoc)
+      res.send(result);
+    })
+
 
     app.put('/tasks/:id',async(req,res)=>{
       const id = req.params.id;
