@@ -6,7 +6,16 @@ const app = express()
 const port = process.env.PORT || 5000;
 
 // middleware
-app.use(cors())
+// app.use(cors())
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://task-board-ce2fe.web.app',
+  ],
+  methods: 'GET, POST, PUT, PATCH, DELETE, OPTIONS', 
+  allowedHeaders: 'Content-Type, Authorization'
+}));
+app.options('*', cors());
 app.use(express.json());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.g9mg4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
